@@ -1,6 +1,5 @@
 import 'package:appwrite_phone_auth/providers/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -52,6 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 final success = await ref
                     .read(AuthState.provider.notifier)
                     .createSession(_phoneController.text);
+                if (!mounted) return;
                 if (success) {
                   Navigator.pushNamed(context, '/verify');
                 }

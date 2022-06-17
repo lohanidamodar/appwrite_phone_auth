@@ -57,8 +57,17 @@ class MyApp extends ConsumerWidget {
         ),
       ),
       home: authState.isLoggedIn ? const ProfilePage() : const LoginPage(),
-      routes: {
-        "/verify": (_) => VerificationScreen('9999'),
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (context) {
+          switch (settings.name) {
+            case '/':
+              return authState.isLoggedIn ? const ProfilePage() : const LoginPage();
+            case '/verify':
+              return VerificationScreen((settings.arguments! as String));
+            default:
+              return const LoginPage();
+          }
+        });
       },
     );
   }
