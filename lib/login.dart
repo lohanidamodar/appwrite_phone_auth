@@ -1,4 +1,6 @@
+import 'package:appwrite_phone_auth/providers/app_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -12,7 +14,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _phoneController = TextEditingController();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: ListView(
@@ -38,15 +40,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 labelText: 'Phone',
                 border: OutlineInputBorder(),
               ),
+              keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () async {
                 // login
-                if(_phoneController.text.isEmpty()) {
+                if (_phoneController.text.isEmpty) {
                   return;
                 }
-                ref.read(AuthState.provider.notifier).createSession(_phoneController.text);
+                final success = await ref
+                    .read(AuthState.provider.notifier)
+                    .createSession(_phoneController.text);
+                if (success) {
+                  Navigator.pushNamed(context, '/verify');
+                }
               },
               child: const Text("Login"),
             ),

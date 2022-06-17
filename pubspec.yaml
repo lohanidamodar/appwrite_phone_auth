@@ -13,6 +13,7 @@ dependencies:
   appwrite: ^5.0.0
   google_fonts: ^3.0.1
   flutter_riverpod: ^1.0.4
+  pin_code_fields: ^7.4.0
 
 dependency_overrides:
   appwrite:

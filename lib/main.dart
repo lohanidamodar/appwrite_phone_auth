@@ -1,5 +1,8 @@
 import 'package:appwrite_phone_auth/login.dart';
+import 'package:appwrite_phone_auth/profile.dart';
+import 'package:appwrite_phone_auth/providers/app_state.dart';
 import 'package:appwrite_phone_auth/res/colors.dart';
+import 'package:appwrite_phone_auth/verify_phone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,11 +11,12 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(AuthState.provider);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -52,7 +56,10 @@ class MyApp extends StatelessWidget {
               ),
         ),
       ),
-      home: const LoginPage(),
+      home: authState.isLoggedIn ? const ProfilePage() : const LoginPage(),
+      routes: {
+        "/verify": (_) => VerificationScreen('9999'),
+      },
     );
   }
 }
