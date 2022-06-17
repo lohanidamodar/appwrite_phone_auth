@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _phoneController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
         child: ListView(
@@ -42,6 +43,10 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: () async {
                 // login
+                if(_phoneController.text.isEmpty()) {
+                  return;
+                }
+                ref.read(AuthState.provider.notifier).createSession(_phoneController.text);
               },
               child: const Text("Login"),
             ),

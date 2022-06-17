@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 
 class AuthState extends ChangeNotifier {
-  static ChangeNotifierProvider authState => _changeNotifierProvider;
+  static ChangeNotifierProvider provider => _changeNotifierProvider;
   bool isLoggedIn = false;
   final _client = Client();
   late final Account _account;
