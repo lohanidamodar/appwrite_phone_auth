@@ -47,6 +47,10 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       backgroundColor: Colors.blue.shade50,
       body: GestureDetector(
         onTap: () {},
@@ -97,14 +101,13 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                   ),
                   length: 6,
                   obscureText: false,
-                  obscuringCharacter: '*',
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
                     borderRadius: BorderRadius.circular(5),
                     fieldHeight: 60,
                     fieldWidth: 50,
-                    activeFillColor: hasError ? Colors.orange : Colors.white,
+                    activeFillColor: hasError ? Colors.red : Colors.green,
                   ),
                   cursorColor: Colors.black,
                   animationDuration: const Duration(milliseconds: 300),
@@ -152,8 +155,8 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                           Navigator.pushReplacementNamed(context, '/');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text(ref.read(AuthState.provider).error)));
+                            content: Text(ref.read(AuthState.provider).error),
+                          ));
                         }
                       },
                 child: Text(
