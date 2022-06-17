@@ -60,8 +60,7 @@ class AuthState extends ChangeNotifier {
     }
     try {
       await _account.updatePhoneSession(userId: userId, secret: secret);
-      isLoggedIn = true;
-      notifyListeners();
+      await getAccount();
       return true;
     } on AppwriteException catch (e) {
       _error = e.message ?? e.toString();
