@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 
 class AuthState extends ChangeNotifier {
+  static ChangeNotifierProvider authState => _changeNotifierProvider;
   bool isLoggedIn = false;
   final _client = Client();
   late final Account _account;
@@ -13,7 +14,7 @@ class AuthState extends ChangeNotifier {
     _account = Account(_client);
   }
 
-  login(String phone) async {
+  createSession(String phone) async {
     try {
       await _account.createPhoneSession(userId: 'unique()', number: phone);
     } on AppwriteException catch (e) {
@@ -21,7 +22,7 @@ class AuthState extends ChangeNotifier {
     }
   }
 
-  confirm(String userId, String secret) async {
+  confirmSession(String userId, String secret) async {
     try {
       await _account.updatePhoneSession(userId: userId, secret: secret);
     } on AppwriteException catch (e) {
@@ -29,3 +30,5 @@ class AuthState extends ChangeNotifier {
     }
   }
 }
+
+final _authStateProvider = ChangeNotifierProvider<AuthState>((ref) => AuthState());
